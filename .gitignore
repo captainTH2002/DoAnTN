@@ -1,0 +1,15 @@
+# Bỏ node_modules của cả frontend & backend
+**/node_modules/
+__pycache__/
+venv/
+# VS Code
+.vscode/
+
+# Thêm tuỳ ngôn ngữ
+*.env
+# Bỏ venv của backend (Python)
+**/venv/
+**/.venv/
+# Bỏ venv của frontend (Node.js)
+**/node_modules/
+**/.node_modules/

@@ -1,0 +1,4 @@
+dir: ../data/congvan/val
+num json files: 75
+num labels: 12
+label list: ['text', 'coquan-c1', 'coquan-c2', 'no', 'diadanh', 'thoigian', 'loai', 'noidung-1', 'noidung-2', 'noinhan', 'chucvu', 'ten']
