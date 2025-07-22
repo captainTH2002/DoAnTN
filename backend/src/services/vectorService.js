@@ -7,17 +7,36 @@ const path = require('path');
 const mammoth = require('mammoth');
 const pdf = require('pdf-parse');
 const FormData = require('form-data');
+const { execFile } = require('child_process');
+
+function ocrImageWithPython(imagePath) {
+  return new Promise((resolve, reject) => {
+    const scriptPath = path.resolve(__dirname, '../../text_detect_ocr/img2text.py');
+    execFile('python', [scriptPath, imagePath], (error, stdout, stderr) => {
+      if (error) {
+        console.error('Python OCR error:', stderr || error);
+        return reject(stderr || error);
+      }
+
+      // Sau khi Python chạy xong, đọc file kết quả
+      const outputPath = path.join(path.dirname(imagePath), 'ocr_result.txt');
+      fs.readFile(outputPath, 'utf8', (err, data) => {
+        if (err) {
+          console.error("Read OCR result error:", err);
+          return reject(err);
+        }
+        resolve(data.trim());
+      });
+    });
+  });
+}
+
 
 async function extractText(filePath) {
   const ext = path.extname(filePath).toLowerCase();
   if (['.jpg', '.jpeg', '.png'].includes(ext)) {
-    // Gửi file ảnh sang API OCR
-    const form = new FormData();
-    form.append('file', fs.createReadStream(filePath));
-    const res = await axios.post('http://127.0.0.1:8002/ocr', form, {
-      headers: form.getHeaders()
-    });
-    return res.data.text;
+    // Gọi Python OCR
+    return await ocrImageWithPython(filePath);
   }
   if (ext === '.txt') {
     return await fsp.readFile(filePath, 'utf8');

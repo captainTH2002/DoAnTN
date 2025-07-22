@@ -19,7 +19,12 @@ const fileSchema = new mongoose.Schema({
   uploadedBy: {             // Khi phân quyền user
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  deleted: {
+    type: Boolean,
+    default: false
+  },  
+  
 });
 
 module.exports = mongoose.model('File', fileSchema);
