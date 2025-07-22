@@ -1,15 +1,16 @@
 import React from 'react'
 
-const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
-
+const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Quanly = React.lazy(() => import('./views/quanly/Quanly'))
-const SearchSemantic = React.lazy(() => import('./views/search/SearchSemantic'))
+const ChatbotPage = React.lazy(() => import('./views/chatbotpage/ChatbotPage'))
+const User = React.lazy(() => import('./views/user/User'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/quanly', name: 'Quản lý tài liệu', element: Quanly },
-  { path: '/search', name: 'Tìm kiếm', element: SearchSemantic },
-  { path: '/theme/colors', name: 'Colors', element: Colors },
+  { path: '/chatbotpage', name: 'Chatbot', element: ChatbotPage },
+  { path: '/user', name: 'Quản lý người dùng', element: User },
+  { path: '/dashboard', name: 'Thống kê', element: Dashboard },
 ]
 
 export default routes

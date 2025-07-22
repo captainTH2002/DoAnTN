@@ -1,49 +1,70 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
   cilDescription,
-  cilDrop,
-  cilExternalLink,
-  cilNotes,
-  cilPencil,
-  cilPuzzle,
-  cilSpeedometer,
+  cilUser,
   cilStar,
+  cilLockLocked,
+  cilExitToApp,
+  cilChatBubble,
+  cilSpeedometer,
 } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { CNavGroup, CNavItem } from '@coreui/react'
+const role = localStorage.getItem('role') // lấy role đã lưu
 
 const _nav = [
   {
     component: CNavItem,
-    name: 'Quản lý tài liệu',
-    to: '/quanly',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    name: 'Thống kê',
+    to: '/dashboard',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    },
   },
   {
     component: CNavItem,
-    name: 'Tìm kiếm',
-    to: '/search',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    name: 'Quản lý tài liệu',
+    to: '/quanly',
+    icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Chatbot',
+    to: '/chatbotpage',
+    icon: <CIcon icon={cilChatBubble} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Quản lý người dùng',
     to: '/user',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
   {
-    component: CNavTitle,
-    name: 'Theme',
+    component: CNavGroup,
+    name: 'Quản lý người dùng',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Login',
+        to: '/login',
+        icon: <CIcon icon={cilLockLocked} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Register',
+        to: '/register',
+        icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+      },
+    ],
   },
   {
     component: CNavItem,
-    name: 'Colors',
-    to: '/theme/colors',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    name: 'Đăng xuất',
+    to: '/logout',
+    icon: <CIcon icon={cilExitToApp} customClassName="nav-icon" />,
   },
 ]
 

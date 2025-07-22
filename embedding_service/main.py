@@ -12,3 +12,4 @@ class TextRequest(BaseModel):
 def embed_text(req: TextRequest):
     embedding = model.encode(req.text).tolist()
     return {"embedding": embedding}
+# uvicorn main:app --reload --host 0.0.0.0 --port 8001 
