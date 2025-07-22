@@ -1,7 +1,8 @@
 import React, { Suspense, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
+import { PrivateRoute } from './components'
+import { AuthProvider } from './contexts/AuthContext'
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
 
@@ -10,6 +11,10 @@ import './scss/examples.scss'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+
+const Login = React.lazy(() => import('./views/pages/login/Login'))
+const Register = React.lazy(() => import('./views/pages/register/Register'))
+const Logout = React.lazy(() => import('./views/pages/logout/Logout'))
 
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
@@ -31,17 +36,30 @@ const App = () => {
 
   return (
     <HashRouter>
-      <Suspense
-        fallback={
-          <div className="pt-3 text-center">
-            <CSpinner color="primary" variant="grow" />
-          </div>
-        }
-      >
-        <Routes>
-          <Route path="*" name="Home" element={<DefaultLayout />} />
-        </Routes>
-      </Suspense>
+      <AuthProvider>
+        <Suspense
+          fallback={
+            <div className="pt-3 text-center">
+              <CSpinner color="primary" variant="grow" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route exact path="/login" name="Đăng nhập" element={<Login />} />
+            <Route exact path="/register" name="Đăng ký" element={<Register />} />
+            <Route exact path="/logout" name="Đăng xuất" element={<Logout />} />
+            <Route
+              path="*"
+              name="Home"
+              element={
+                <PrivateRoute>
+                  <DefaultLayout />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
+      </AuthProvider>
     </HashRouter>
   )
 }
