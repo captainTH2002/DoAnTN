@@ -11,7 +11,7 @@ const messageSchema = new mongoose.Schema({
     enum: ['user', 'bot'],
     required: true 
   },
-  message: { 
+  content: {  // ✅ đổi tên
     type: String, 
     required: true 
   },
@@ -19,6 +19,7 @@ const messageSchema = new mongoose.Schema({
     type: Date, 
     default: Date.now 
   }
-});
+})
+
 
 module.exports = mongoose.model('Message', messageSchema);

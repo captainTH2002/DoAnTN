@@ -1,29 +1,21 @@
 const express = require("express");
-const { askGemini } = require("../services/askGemini.js");
-const { searchTopK } = require('../services/vectorService');
-
 const router = express.Router();
+const chatController = require("../controllers/chatController");
+const authMiddleware = require("../middleware/auth");
 
-router.post("/", async (req, res) => {
-  const { question } = req.body;
-  console.log("==== question ====");
-  console.log(question);
-  // Giả sử bạn đã có vectorSearch
-  // const contexts = await vectorSearch(question);
-  const contexts = await searchTopK(question); 
-  console.log("==== Contexts ====");
-  console.log(contexts);
+// Danh sách conversation của user
+router.get("/conversations", authMiddleware, chatController.getConversations);
 
-  const contextTexts = contexts.map(c => c.content);
-  console.log("==== contextTexts ====");
-  console.log(contextTexts);
-  try {
-    const answer = await askGemini(question, contextTexts);
-    res.json({ answer, contexts: question }); // trả về để client thấy
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Có lỗi xảy ra khi gọi Gemini" });
-  }
-});
+// Tạo conversation mới
+router.post("/conversations", authMiddleware, chatController.createConversation);
 
-module.exports = router;
+// Lấy tin nhắn của 1 cuộc hội thoại
+router.get("/messages/:conversationId", authMiddleware, chatController.getMessages);
+
+// Gửi câu hỏi, lưu message, gọi Gemini
+router.post("/chat/:conversationId", authMiddleware, chatController.askQuestion);
+
+// Nếu muốn thêm API test không cần token
+router.post("/chat", chatController.askQuick);
+
+module.exports = router

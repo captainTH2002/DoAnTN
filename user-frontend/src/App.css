@@ -1,0 +1,28 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Logo hover */
+.logo {
+  height: 6em;
+  padding: 1em;
+  transition: filter 300ms, transform 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em hsl(220, 100%, 75%));
+  transform: scale(1.05);
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.read-the-docs {
+  color: hsl(0 0% 60%);
+}
